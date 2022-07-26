@@ -41,7 +41,8 @@ Command-line interface for sending simple commands to a ROS node controlling a 2
 This serves as an example for publishing messages on the 'Robotiq2FGripperRobotOutput' topic using the 'Robotiq2FGripper_robot_output' msg type for sending commands to a 2F gripper.
 """
 
-import rospy
+#import rospy
+import rclpy
 from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output as outputMsg
 from six.moves import input
 
@@ -130,21 +131,28 @@ def askForCommand(command):
 
 def publisher():
     """Main loop which requests new commands and publish them on the Robotiq2FGripperRobotOutput topic."""
-    rospy.init_node("Robotiq2FGripperSimpleController")
+    rclpy.init(args=args)
+    #rospy.init_node("Robotiq2FGripperSimpleController")
+    node = rclpy.create_node("Robotiq2FGripperSimpleController")
 
-    pub = rospy.Publisher(
-        "Robotiq2FGripperRobotOutput", outputMsg.Robotiq2FGripper_robot_output
-    )
+    #pub = rospy.Publisher(
+    #    "Robotiq2FGripperRobotOutput", outputMsg.Robotiq2FGripper_robot_output
+    #)
+    pub = node.create_publisher(
+		outputMSG.Robotiq2FGripper_robot_output, "Robotiq2FGripperRobotOutput"
+	)
 
     command = outputMsg.Robotiq2FGripper_robot_output()
-
-    while not rospy.is_shutdown():
-
-        command = genCommand(askForCommand(command), command)
-
+        
+    def timer_callback():
+    	command = genCommand(askForCommand(command), command)
+        node.get_logger().info('Publishing: "%s"' % msg.data)
         pub.publish(command)
 
-        rospy.sleep(0.1)
+    timer_period = 0.1  # seconds
+    timer = node.create_timer(timer_period, timer_callback)
+
+    rclpy.spin(node)
 
 
 if __name__ == "__main__":

@@ -40,7 +40,9 @@ ROS node for controling a Robotiq 2F gripper using the Modbus RTU protocol.
 
 The script takes as an argument the IP address of the gripper. It initializes a baseRobotiq2FGripper object and adds a comModbusTcp client to it. It then loops forever, reading the gripper status and updating its command. The gripper status is published on the 'Robotiq2FGripperRobotInput' topic using the 'Robotiq2FGripper_robot_input' msg type. The node subscribes to the 'Robotiq2FGripperRobotOutput' topic for new commands using the 'Robotiq2FGripper_robot_output' msg type. Examples are provided to control the gripper (Robotiq2FGripperSimpleController.py) and interpreting its status (Robotiq2FGripperStatusListener.py).
 """
-import rospy
+#import rospy
+import rclpy
+from rclpy.node import Node
 import robotiq_2f_gripper_control.baseRobotiq2FGripper
 import robotiq_modbus_rtu.comModbusRtu
 import sys
@@ -49,6 +51,7 @@ from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output as out
 
 
 def mainLoop(device):
+    rclpy.init(args=args)
 
     # Gripper is a 2F with a TCP connection
     gripper = (
@@ -59,22 +62,32 @@ def mainLoop(device):
     # We connect to the address received as an argument
     gripper.client.connectToDevice(device)
 
-    rospy.init_node("robotiq2FGripper")
+#    rospy.init_node("robotiq2FGripper")
+	robotiqNode = rclpy.create_node("robotiq2FGripper")
 
     # The Gripper status is published on the topic named 'Robotiq2FGripperRobotInput'
-    pub = rospy.Publisher(
-        "Robotiq2FGripperRobotInput", inputMsg.Robotiq2FGripper_robot_input
-    )
+#    pub = rospy.Publisher(
+#        "Robotiq2FGripperRobotInput", inputMsg.Robotiq2FGripper_robot_input
+#    )
+	pub = robotiqNode.create_publisher(
+		inputMSG.Robotiq2FGripper_robot_input, "Robotiq2FGripperRobotInput"
+	)
 
     # The Gripper command is received from the topic named 'Robotiq2FGripperRobotOutput'
-    rospy.Subscriber(
-        "Robotiq2FGripperRobotOutput",
-        outputMsg.Robotiq2FGripper_robot_output,
-        gripper.refreshCommand,
-    )
+#    rospy.Subscriber(
+#        "Robotiq2FGripperRobotOutput",
+#        outputMsg.Robotiq2FGripper_robot_output,
+#        gripper.refreshCommand,
+#    )
+
+	robotiqNode.create_subscriber(
+		outputMsg.Robotiq2FGripper_robot_output,
+		"Robotiq2FGripperRobotOutput",
+		gripper.refreshCommand,
+	)
 
     # We loop
-    while not rospy.is_shutdown():
+    while rclpy.ok():
 
         # Get and publish the Gripper status
         status = gripper.getStatus()
@@ -88,10 +101,11 @@ def mainLoop(device):
 
         # Wait a little
         # rospy.sleep(0.05)
+        rclpy.spin_once(robotiqNode)
 
 
 if __name__ == "__main__":
     try:
         mainLoop(sys.argv[1])
-    except rospy.ROSInterruptException:
-        pass
+#    except rospy.ROSInterruptException:
+#        pass
