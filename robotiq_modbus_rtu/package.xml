@@ -9,9 +9,16 @@
   <author>Nicolas Lauzier (Robotiq inc.)</author>
   <author email="kphawkins@gatech.edu">Kelsey Hawkins</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <!--buildtool_depend>catkin</buildtool_depend-->
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
 
   <depend>python3-pymodbus</depend>
-  <depend>rospy</depend>
+  <depend>rclpy</depend>
+  
+  <export>
+  <build_type>ament_cmake</build_type>
+  </export>
 
 </package>
