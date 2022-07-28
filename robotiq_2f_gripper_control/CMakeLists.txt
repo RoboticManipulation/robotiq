@@ -51,15 +51,14 @@ include_directories(
 #  ${catkin_LIBRARIES}
 #)
 
-ament_target_dependencies(robotiq_2f_gripper_ethercat_node,
-  ${robotiq_ethercat_LIBRARIES}
-)
-add_dependencies(robotiq_2f_gripper_ethercat_node robotiq_2f_gripper_control_generate_messages_cpp)
+#ament_target_dependencies(robotiq_2f_gripper_ethercat_node,
+#  ${robotiq_ethercat_LIBRARIES}
+#)
+#add_dependencies(robotiq_2f_gripper_ethercat_node #robotiq_2f_gripper_control_generate_messages_cpp)
 
-install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py
-  nodes/Robotiq2FGripperTcpNode.py nodes/Robotiq2FGripperRtuNode.py DESTINATION ~/ros2/${PROJECT_NAME})
+install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py nodes/Robotiq2FGripperRtuNode.py DESTINATION ~/ros2/${PROJECT_NAME})
 
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  DESTINATION include}
 )
 ament_package()
