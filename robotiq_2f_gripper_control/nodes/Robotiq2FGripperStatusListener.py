@@ -80,72 +80,72 @@ def statusInterpreter(status):
 
     output = "\n-----\n2F gripper status interpreter\n-----\n"
 
-    # gACT
-    output += "gACT = " + str(status.gACT) + ": "
-    if status.gACT == 0:
+    # g_act
+    output += "g_act = " + str(status.g_act) + ": "
+    if status.g_act == 0:
         output += "Gripper reset\n"
-    if status.gACT == 1:
+    if status.g_act == 1:
         output += "Gripper activation\n"
 
-    # gGTO
-    output += "gGTO = " + str(status.gGTO) + ": "
-    if status.gGTO == 0:
+    # g_gto
+    output += "g_gto = " + str(status.g_gto) + ": "
+    if status.g_gto == 0:
         output += "Standby (or performing activation/automatic release)\n"
-    if status.gGTO == 1:
+    if status.g_gto == 1:
         output += "Go to Position Request\n"
 
-    # gSTA
-    output += "gSTA = " + str(status.gSTA) + ": "
-    if status.gSTA == 0:
+    # g_sta
+    output += "g_sta = " + str(status.g_sta) + ": "
+    if status.g_sta == 0:
         output += "Gripper is in reset ( or automatic release ) state. see Fault Status if Gripper is activated\n"
-    if status.gSTA == 1:
+    if status.g_sta == 1:
         output += "Activation in progress\n"
-    if status.gSTA == 2:
+    if status.g_sta == 2:
         output += "Not used\n"
-    if status.gSTA == 3:
+    if status.g_sta == 3:
         output += "Activation is completed\n"
 
-    # gOBJ
-    output += "gOBJ = " + str(status.gOBJ) + ": "
-    if status.gOBJ == 0:
+    # g_obj
+    output += "g_obj = " + str(status.g_obj) + ": "
+    if status.g_obj == 0:
         output += "Fingers are in motion (only meaningful if gGTO = 1)\n"
-    if status.gOBJ == 1:
+    if status.g_obj == 1:
         output += "Fingers have stopped due to a contact while opening\n"
-    if status.gOBJ == 2:
+    if status.g_obj == 2:
         output += "Fingers have stopped due to a contact while closing \n"
-    if status.gOBJ == 3:
+    if status.g_obj == 3:
         output += "Fingers are at requested position\n"
 
-    # gFLT
-    output += "gFLT = " + str(status.gFLT) + ": "
-    if status.gFLT == 0x00:
+    # g_flt
+    output += "g_flt = " + str(status.g_flt) + ": "
+    if status.g_flt == 0x00:
         output += "No Fault\n"
-    if status.gFLT == 0x05:
+    if status.g_flt == 0x05:
         output += "Priority Fault: Action delayed, initialization must be completed prior to action\n"
-    if status.gFLT == 0x07:
+    if status.g_flt == 0x07:
         output += "Priority Fault: The activation bit must be set prior to action\n"
-    if status.gFLT == 0x09:
+    if status.g_flt == 0x09:
         output += "Minor Fault: The communication chip is not ready (may be booting)\n"
-    if status.gFLT == 0x0B:
+    if status.g_flt == 0x0B:
         output += "Minor Fault: Automatic release in progress\n"
-    if status.gFLT == 0x0E:
+    if status.g_flt == 0x0E:
         output += "Major Fault: Overcurrent protection triggered\n"
-    if status.gFLT == 0x0F:
+    if status.g_flt == 0x0F:
         output += "Major Fault: Automatic release completed\n"
 
-    # gPR
-    output += "gPR = " + str(status.gPR) + ": "
+    # g_pr
+    output += "g_pr = " + str(status.g_pr) + ": "
     output += (
-        "Echo of the requested position for the Gripper: " + str(status.gPR) + "/255\n"
+        "Echo of the requested position for the Gripper: " + str(status.g_pr) + "/255\n"
     )
 
-    # gPO
-    output += "gPO = " + str(status.gPO) + ": "
-    output += "Position of Fingers: " + str(status.gPO) + "/255\n"
+    # g_po
+    output += "g_po = " + str(status.g_po) + ": "
+    output += "Position of Fingers: " + str(status.g_po) + "/255\n"
 
-    # gCU
-    output += "gCU = " + str(status.gCU) + ": "
-    output += "Current of Fingers: " + str(status.gCU * 10) + " mA\n"
+    # g_cu
+    output += "g_cu = " + str(status.g_cu) + ": "
+    output += "Current of Fingers: " + str(status.g_cu * 10) + " mA\n"
 
     return output
 

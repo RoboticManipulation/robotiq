@@ -1,0 +1,27 @@
+-- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Found rclpy: 1.9.1 (/opt/ros/galactic/share/rclpy/cmake)
+-- Found rosidl_default_generators: 1.1.1 (/opt/ros/galactic/share/rosidl_default_generators/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Found rosidl_adapter: 2.2.2 (/opt/ros/galactic/share/rosidl_adapter/cmake)
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu
+-- Install configuration: ""
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/package_run_dependencies/robotiq_modbus_rtu
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/parent_prefix_path/robotiq_modbus_rtu
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/ament_prefix_path.sh
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/ament_prefix_path.dsv
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/path.sh
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/path.dsv
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.bash
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.sh
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.zsh
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.dsv
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/package.dsv
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/packages/robotiq_modbus_rtu
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/robotiq_modbus_rtuConfig.cmake
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/robotiq_modbus_rtuConfig-version.cmake
+-- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/package.xml

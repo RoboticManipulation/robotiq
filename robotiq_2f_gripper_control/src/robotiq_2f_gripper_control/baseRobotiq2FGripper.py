@@ -57,23 +57,23 @@ class robotiqbaseRobotiq2FGripper:
         """Function to verify that the value of each variable satisfy its limits."""
 
         # Verify that each variable is in its correct range
-        command.rACT = max(0, command.rACT)
-        command.rACT = min(1, command.rACT)
+        command.r_act = max(0, command.r_act)
+        command.r_act = min(1, command.r_act)
 
-        command.rGTO = max(0, command.rGTO)
-        command.rGTO = min(1, command.rGTO)
+        command.r_gto = max(0, command.r_gto)
+        command.r_gto = min(1, command.r_gto)
 
-        command.rATR = max(0, command.rATR)
-        command.rATR = min(1, command.rATR)
+        command.r_atr = max(0, command.r_atr)
+        command.r_atr = min(1, command.r_atr)
 
-        command.rPR = max(0, command.rPR)
-        command.rPR = min(255, command.rPR)
+        command.r_pr = max(0, command.r_pr)
+        command.r_pr = min(255, command.r_pr)
 
-        command.rSP = max(0, command.rSP)
-        command.rSP = min(255, command.rSP)
+        command.r_sp = max(0, command.r_sp)
+        command.r_sp = min(255, command.r_sp)
 
-        command.rFR = max(0, command.rFR)
-        command.rFR = min(255, command.rFR)
+        command.r_fr = max(0, command.r_fr)
+        command.r_fr = min(255, command.r_fr)
 
         # Return the modified command
         return command
@@ -89,12 +89,12 @@ class robotiqbaseRobotiq2FGripper:
 
         # Build the command with each output variable
         # To-Do: add verification that all variables are in their authorized range
-        self.message.append(command.rACT + (command.rGTO << 3) + (command.rATR << 4))
+        self.message.append(command.r_act + (command.r_gto << 3) + (command.r_atr << 4))
         self.message.append(0)
         self.message.append(0)
-        self.message.append(command.rPR)
-        self.message.append(command.rSP)
-        self.message.append(command.rFR)
+        self.message.append(command.r_pr)
+        self.message.append(command.r_sp)
+        self.message.append(command.r_fr)
 
     def sendCommand(self):
         """Send the command to the Gripper."""
@@ -111,13 +111,13 @@ class robotiqbaseRobotiq2FGripper:
         message = inputMsg.Robotiq2FGripper_robot_input()
 
         # Assign the values to their respective variables
-        message.gACT = (status[0] >> 0) & 0x01
-        message.gGTO = (status[0] >> 3) & 0x01
-        message.gSTA = (status[0] >> 4) & 0x03
-        message.gOBJ = (status[0] >> 6) & 0x03
-        message.gFLT = status[2]
-        message.gPR = status[3]
-        message.gPO = status[4]
-        message.gCU = status[5]
+        message.g_act = (status[0] >> 0) & 0x01
+        message.g_gto = (status[0] >> 3) & 0x01
+        message.g_sta = (status[0] >> 4) & 0x03
+        message.g_obj = (status[0] >> 6) & 0x03
+        message.g_flt = status[2]
+        message.g_pr = status[3]
+        message.g_po = status[4]
+        message.g_cu = status[5]
 
         return message

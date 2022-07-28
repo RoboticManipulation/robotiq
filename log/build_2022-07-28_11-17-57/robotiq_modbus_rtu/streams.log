@@ -1,0 +1,34 @@
+[0.022s] Invoking command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/robotiq_modbus_rtu -DCMAKE_INSTALL_PREFIX=/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu
+[0.093s] -- The C compiler identification is GNU 9.4.0
+[0.156s] -- The CXX compiler identification is GNU 9.4.0
+[0.163s] -- Check for working C compiler: /usr/bin/cc
+[0.243s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.244s] -- Detecting C compiler ABI info
+[0.329s] -- Detecting C compiler ABI info - done
+[0.346s] -- Detecting C compile features
+[0.346s] -- Detecting C compile features - done
+[0.348s] -- Check for working CXX compiler: /usr/bin/c++
+[0.439s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[0.440s] -- Detecting CXX compiler ABI info
+[0.531s] -- Detecting CXX compiler ABI info - done
+[0.545s] -- Detecting CXX compile features
+[0.546s] -- Detecting CXX compile features - done
+[0.551s] -- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)
+[0.588s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.588s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.706s] -- Found rclpy: 1.9.1 (/opt/ros/galactic/share/rclpy/cmake)
+[0.710s] -- Found rosidl_default_generators: 1.1.1 (/opt/ros/galactic/share/rosidl_default_generators/cmake)
+[0.720s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.734s] -- Found rosidl_adapter: 2.2.2 (/opt/ros/galactic/share/rosidl_adapter/cmake)
+[0.911s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[0.947s] -- Found FastRTPS: /opt/ros/galactic/include  
+[1.055s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.090s] CMake Error at /opt/ros/galactic/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:59 (message):
+[1.090s]   rosidl_generate_interfaces() called without any interface files
+[1.090s] Call Stack (most recent call first):
+[1.090s]   CMakeLists.txt:11 (rosidl_generate_interfaces)
+[1.091s] 
+[1.091s] 
+[1.092s] -- Configuring incomplete, errors occurred!
+[1.092s] See also "/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu/CMakeFiles/CMakeOutput.log".
+[1.099s] Invoked command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/robotiq_modbus_rtu -DCMAKE_INSTALL_PREFIX=/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu

@@ -1,0 +1,33 @@
+[0.018s] Invoking command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/robotiq_modbus_rtu -DCMAKE_INSTALL_PREFIX=/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu
+[0.037s] -- Found ament_cmake: 1.1.5 (/opt/ros/galactic/share/ament_cmake/cmake)
+[0.061s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.124s] -- Found rclpy: 1.9.1 (/opt/ros/galactic/share/rclpy/cmake)
+[0.124s] -- Found rosidl_default_generators: 1.1.1 (/opt/ros/galactic/share/rosidl_default_generators/cmake)
+[0.132s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.136s] -- Found rosidl_adapter: 2.2.2 (/opt/ros/galactic/share/rosidl_adapter/cmake)
+[0.284s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.367s] -- Configuring done
+[0.369s] -- Generating done
+[0.370s] -- Build files have been written to: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu
+[0.378s] Invoked command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/robotiq_modbus_rtu -DCMAKE_INSTALL_PREFIX=/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu
+[0.379s] Invoking command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake --build /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu -- -j8 -l8
+[0.434s] Invoked command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake --build /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu -- -j8 -l8
+[0.484s] Invoking command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake --install /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu
+[0.493s] -- Install configuration: ""
+[0.521s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/package_run_dependencies/robotiq_modbus_rtu
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/parent_prefix_path/robotiq_modbus_rtu
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/ament_prefix_path.sh
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/ament_prefix_path.dsv
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/path.sh
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/environment/path.dsv
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.bash
+[0.522s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.sh
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.zsh
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/local_setup.dsv
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/package.dsv
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/ament_index/resource_index/packages/robotiq_modbus_rtu
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/robotiq_modbus_rtuConfig.cmake
+[0.523s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/cmake/robotiq_modbus_rtuConfig-version.cmake
+[0.524s] -- Installing: /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/install/robotiq_modbus_rtu/share/robotiq_modbus_rtu/package.xml
+[0.526s] Invoked command in '/home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/galactic /usr/bin/cmake --install /home/user/reitz/ros2/robotiq_ros2_driver/robotiq/build/robotiq_modbus_rtu
