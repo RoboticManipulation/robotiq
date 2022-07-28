@@ -59,6 +59,6 @@ include_directories(
 install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py nodes/Robotiq2FGripperRtuNode.py DESTINATION ~/ros2/${PROJECT_NAME})
 
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION include}
+  DESTINATION include
 )
 ament_package()
