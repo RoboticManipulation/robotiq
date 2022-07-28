@@ -18,8 +18,8 @@ find_package(ament_cmake_python REQUIRED)
 #)
 
 set(msg_files
-  "msg/Robotiq2FGripper_robot_input.msg"
-  "msg/Robotiq2FGripper_robot_output.msg"
+  "msg/Robotiq2FGripperRobotInput.msg"
+  "msg/Robotiq2FGripperRobotOutput.msg"
 )
 
 #catkin_python_setup()
@@ -41,10 +41,10 @@ include_directories(
   include ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(robotiq_2f_gripper_ethercat_node
-  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_node.cpp
-  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_client.cpp
-)
+#add_executable(robotiq_2f_gripper_ethercat_node
+#  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_node.cpp
+#  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_client.cpp
+#)
 
 #target_link_libraries(robotiq_2f_gripper_ethercat_node
 #  ${robotiq_ethercat_LIBRARIES}
