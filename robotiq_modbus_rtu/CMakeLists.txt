@@ -10,6 +10,14 @@ find_package(ament_cmake_python REQUIRED)
 
 ament_export_dependencies(rosidl_default_runtime)
 
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executables
+install(PROGRAMS
+  src/${PROJECT_NAME}/comModbusRtu.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 #catkin_package(
 #    CATKIN_DEPENDS rospy
 #)

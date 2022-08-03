@@ -46,12 +46,12 @@ from rclpy.node import Node
 import robotiq_2f_gripper_control.baseRobotiq2FGripper
 import robotiq_modbus_rtu.comModbusRtu
 import sys
-from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_input as inputMsg
-from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output as outputMsg
+from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotInput as inputMsg
+from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotOutput as outputMsg
 
 
 def mainLoop(device):
-    rclpy.init(args=args)
+    rclpy.init()
 
     # Gripper is a 2F with a TCP connection
     gripper = (
@@ -63,14 +63,14 @@ def mainLoop(device):
     gripper.client.connectToDevice(device)
 
 #    rospy.init_node("robotiq2FGripper")
-	robotiqNode = rclpy.create_node("robotiq2FGripper")
+    robotiqNode = rclpy.create_node("robotiq2FGripper")
 
     # The Gripper status is published on the topic named 'Robotiq2FGripperRobotInput'
 #    pub = rospy.Publisher(
 #        "Robotiq2FGripperRobotInput", inputMsg.Robotiq2FGripper_robot_input
 #    )
-	pub = robotiqNode.create_publisher(
-		inputMSG.Robotiq2FGripper_robot_input, "Robotiq2FGripperRobotInput"
+    pub = robotiqNode.create_publisher(
+		inputMsg, "Robotiq2FGripperRobotInput", 10
 	)
 
     # The Gripper command is received from the topic named 'Robotiq2FGripperRobotOutput'
@@ -80,10 +80,11 @@ def mainLoop(device):
 #        gripper.refreshCommand,
 #    )
 
-	robotiqNode.create_subscriber(
-		outputMsg.Robotiq2FGripper_robot_output,
+    robotiqNode.create_subscription(
+		outputMsg,
 		"Robotiq2FGripperRobotOutput",
 		gripper.refreshCommand,
+        10
 	)
 
     # We loop
@@ -101,11 +102,16 @@ def mainLoop(device):
 
         # Wait a little
         # rospy.sleep(0.05)
-        rclpy.spin_once(robotiqNode)
+
+        rclpy.spin_once(robotiqNode, executor=None, timeout_sec=0.05)
+        
+    robotiqNode.destroy_node()
+    rclpy.shutdown() 
 
 
 if __name__ == "__main__":
-    try:
-        mainLoop(sys.argv[1])
-#    except rospy.ROSInterruptException:
-#        pass
+    #try:
+    mainLoop(sys.argv[1])
+
+    #    except rospy.ROSInterruptException:
+    #        pass

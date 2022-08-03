@@ -42,8 +42,10 @@ This serves as an example for publishing messages on the 'Robotiq2FGripperRobotO
 """
 
 #import rospy
+import time
 import rclpy
-from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_output as outputMsg
+from rclpy.node import Node
+from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotOutput as outputMsg
 from six.moves import input
 
 
@@ -51,14 +53,14 @@ def genCommand(char, command):
     """Update the command according to the character entered by the user."""
 
     if char == "a":
-        command = outputMsg.Robotiq2FGripper_robot_output()
+        command = outputMsg()
         command.r_act = 1
         command.r_gto = 1
         command.r_sp = 255
         command.r_fr = 150
 
     if char == "r":
-        command = outputMsg.Robotiq2FGripper_robot_output()
+        command = outputMsg()
         command.r_act = 0
 
     if char == "c":
@@ -75,6 +77,8 @@ def genCommand(char, command):
         if command.r_pr < 0:
             command.r_pr = 0
     except ValueError:
+        pass
+    except AssertionError:
         pass
 
     if char == "f":
@@ -128,10 +132,16 @@ def askForCommand(command):
 
     return input(strAskForCommand)
 
+def timer_callback(pub):
+
+    command = outputMsg()
+    command = genCommand(askForCommand(command), command)
+    pub.publish(command)
+
 
 def publisher():
     """Main loop which requests new commands and publish them on the Robotiq2FGripperRobotOutput topic."""
-    rclpy.init(args=args)
+    rclpy.init()
     #rospy.init_node("Robotiq2FGripperSimpleController")
     node = rclpy.create_node("Robotiq2FGripperSimpleController")
 
@@ -139,20 +149,29 @@ def publisher():
     #    "Robotiq2FGripperRobotOutput", outputMsg.Robotiq2FGripper_robot_output
     #)
     pub = node.create_publisher(
-		outputMSG.Robotiq2FGripper_robot_output, "Robotiq2FGripperRobotOutput"
-	)
+        outputMsg, "Robotiq2FGripperRobotOutput", 10
+    )
+   
+    #timer_period = 0.1  # seconds
+    #timer = node.create_timer(timer_period, timer_callback(pub))
 
-    command = outputMsg.Robotiq2FGripper_robot_output()
-        
-    def timer_callback():
-    	command = genCommand(askForCommand(command), command)
-        node.get_logger().info('Publishing: "%s"' % msg.data)
+    #rclpy.spin(node)
+
+    command = outputMsg()
+
+    while rclpy.ok():
+
+        command = genCommand(askForCommand(command), command)
         pub.publish(command)
 
-    timer_period = 0.1  # seconds
-    timer = node.create_timer(timer_period, timer_callback)
+        # Wait a little
+        time.sleep(0.05)
+        print("i am fine")
 
-    rclpy.spin(node)
+        rclpy.spin_once(node, executor=None, timeout_sec=0.05)
+        
+    node.destroy_node()
+    rclpy.shutdown() 
 
 
 if __name__ == "__main__":

@@ -3,11 +3,12 @@ project(robotiq_2f_gripper_control)
 set(CMAKE_CXX_STANDARD 14)
 #find_package(catkin REQUIRED COMPONENTS robotiq_ethercat roscpp rospy message_generation)
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 #find_package(robotiq_ethercat REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(ament_cmake_python REQUIRED)
+
 
 
 
@@ -56,7 +57,10 @@ include_directories(
 #)
 #add_dependencies(robotiq_2f_gripper_ethercat_node #robotiq_2f_gripper_control_generate_messages_cpp)
 
-install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py nodes/Robotiq2FGripperRtuNode.py DESTINATION ~/ros2/${PROJECT_NAME})
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+
+install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py nodes/Robotiq2FGripperRtuNode.py DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION include

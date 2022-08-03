@@ -66,10 +66,11 @@ def Robotiq2FGripperStatusListener():
 #    )
 #    rospy.spin()
 
-	node.create_subscriber(
-		inputMsg.Robotiq2FGripper_robot_input,
+	node.create_subscribtion(
+		inputMsg,
 		"Robotiq2FGripperRobotInput",
 		printStatus,
+        10
 	)
 	while rclpy.ok():
        	rclpy.spin_once(node)
