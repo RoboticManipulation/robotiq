@@ -8,12 +8,16 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 #catkin_python_setup()
 
-rosidl_generate_interfaces(${PROJECT_NAME}
-  ${msg_files}
-)
-
 ament_export_dependencies(rosidl_default_runtime)
 
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executables
+install(PROGRAMS
+  src/${PROJECT_NAME}/comModbusRtu.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 #catkin_package(
 #    CATKIN_DEPENDS rospy
 #)

@@ -3,11 +3,12 @@ project(robotiq_2f_gripper_control)
 set(CMAKE_CXX_STANDARD 14)
 #find_package(catkin REQUIRED COMPONENTS robotiq_ethercat roscpp rospy message_generation)
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 #find_package(robotiq_ethercat REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(ament_cmake_python REQUIRED)
+
 
 
 
@@ -18,8 +19,8 @@ find_package(ament_cmake_python REQUIRED)
 #)
 
 set(msg_files
-  "msg/Robotiq2FGripper_robot_input.msg"
-  "msg/Robotiq2FGripper_robot_output.msg"
+  "msg/Robotiq2FGripperRobotInput.msg"
+  "msg/Robotiq2FGripperRobotOutput.msg"
 )
 
 #catkin_python_setup()
@@ -41,25 +42,27 @@ include_directories(
   include ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(robotiq_2f_gripper_ethercat_node
-  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_node.cpp
-  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_client.cpp
-)
+#add_executable(robotiq_2f_gripper_ethercat_node
+#  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_node.cpp
+#  src/robotiq_2f_gripper_control/robotiq_2f_gripper_ethercat_client.cpp
+#)
 
 #target_link_libraries(robotiq_2f_gripper_ethercat_node
 #  ${robotiq_ethercat_LIBRARIES}
 #  ${catkin_LIBRARIES}
 #)
 
-ament_target_dependencies(robotiq_2f_gripper_ethercat_node,
-  ${robotiq_ethercat_LIBRARIES}
-)
-add_dependencies(robotiq_2f_gripper_ethercat_node robotiq_2f_gripper_control_generate_messages_cpp)
+#ament_target_dependencies(robotiq_2f_gripper_ethercat_node,
+#  ${robotiq_ethercat_LIBRARIES}
+#)
+#add_dependencies(robotiq_2f_gripper_ethercat_node #robotiq_2f_gripper_control_generate_messages_cpp)
 
-install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py
-  nodes/Robotiq2FGripperTcpNode.py nodes/Robotiq2FGripperRtuNode.py DESTINATION ~/ros2/${PROJECT_NAME})
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+
+install(PROGRAMS nodes/Robotiq2FGripperSimpleController.py nodes/Robotiq2FGripperStatusListener.py nodes/Robotiq2FGripperRtuNode.py DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  DESTINATION include
 )
 ament_package()
