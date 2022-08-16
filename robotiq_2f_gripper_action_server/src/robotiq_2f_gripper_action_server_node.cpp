@@ -18,28 +18,33 @@ robotiq_2f_gripper_action_server::Robotiq2FGripperParams c2_85_defaults()
 int main(int argc, char** argv)
 {
     // Can be renamed with standard ROS-node launch interface
-    ros::init(argc, argv, "gripper_2f_gripper_action_server");
+    //ros::init(argc, argv, "gripper_2f_gripper_action_server");
+    rclcpp::init(argc, argv);
 
     // Private Note Handle for retrieving parameter arguments to the server
-    ros::NodeHandle private_nh("~");
+    //ros::NodeHandle private_nh("~");
+    rclcpp::Node private_n;
 
     std::string gripper_name;
-    private_nh.param<std::string>("gripper_name", gripper_name, "gripper");
+    private_n.param<std::string>("gripper_name", gripper_name, "gripper");
 
     // Fill out 2F-Gripper Params
     robotiq_2f_gripper_action_server::Robotiq2FGripperParams cparams = c2_85_defaults();
 
     // Min because fingers can push forward before the mechanical stops are reached
-    private_nh.param<double>("min_gap", cparams.min_gap_, cparams.min_gap_);
-    private_nh.param<double>("max_gap", cparams.max_gap_, cparams.max_gap_);
-    private_nh.param<double>("min_effort", cparams.min_effort_, cparams.min_effort_);
-    private_nh.param<double>("max_effort", cparams.max_effort_, cparams.max_effort_);
+    private_n.param<double>("min_gap", cparams.min_gap_, cparams.min_gap_);
+    private_n.param<double>("max_gap", cparams.max_gap_, cparams.max_gap_);
+    private_n.param<double>("min_effort", cparams.min_effort_, cparams.min_effort_);
+    private_n.param<double>("max_effort", cparams.max_effort_, cparams.max_effort_);
 
-    ROS_INFO("Initializing Robotiq action server for gripper: %s", gripper_name.c_str());
+    //ROS_INFO("Initializing Robotiq action server for gripper: %s", gripper_name.c_str());
+    RCLCPP_INFO(private_n->get_logger(), "Initializing Robotiq action server for gripper: %s", gripper_name.c_str());
 
     // The name of the gripper -> this server communicates over name/inputs and name/outputs
     robotiq_2f_gripper_action_server::Robotiq2FGripperActionServer gripper(gripper_name, cparams);
 
-    ROS_INFO("Robotiq action-server spinning for gripper: %s", gripper_name.c_str());
-    ros::spin();
+    //ROS_INFO("Robotiq action-server spinning for gripper: %s", gripper_name.c_str());
+    RCLCPP_INFO(private_n->get_logger(), "Robotiq action-server spinning for gripper: %s", gripper_name.c_str());
+    //ros::spin();
+    rclcpp::spin();
 }

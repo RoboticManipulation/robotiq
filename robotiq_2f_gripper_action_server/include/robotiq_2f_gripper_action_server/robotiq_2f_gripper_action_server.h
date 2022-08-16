@@ -9,9 +9,12 @@
 // STL
 #include <string>
 // ROS standard
-#include <ros/ros.h>
-#include <actionlib/server/simple_action_server.h>
-#include <control_msgs/GripperCommandAction.h>
+//#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
+#include "rclcpp_action/rclcpp_action.hpp"
+#include "rclcpp_components/register_node_macro.hpp"
+//#include <actionlib/server/simple_action_server.h>
+//#include <control_msgs/GripperCommandAction.h>
 // Repo specific includes
 #include <robotiq_2f_gripper_control/Robotiq2FGripper_robot_input.h>
 #include <robotiq_2f_gripper_control/Robotiq2FGripper_robot_output.h>
@@ -60,11 +63,15 @@ public:
 private:
     void issueActivation();
 
-    ros::NodeHandle nh_;
-    actionlib::SimpleActionServer<control_msgs::GripperCommandAction> as_;
+    //ros::NodeHandle nh_;
+    rclcpp::node n_;
+    //actionlib::SimpleActionServer<control_msgs::GripperCommandAction> as_;
+    rclcpp_action::Server<control_msgs::GripperCommandAction> as_;
 
-    ros::Subscriber state_sub_;  // Subs to grippers "input" topic
-    ros::Publisher goal_pub_;    // Pubs to grippers "output" topic
+    //ros::Subscriber state_sub_;  // Subs to grippers "input" topic
+    rclcpp::subscription::Subscription state_sub_;  // Subs to grippers "input" topic
+    //ros::Publisher goal_pub_;    // Pubs to grippers "output" topic
+    rclcpp::Publisher goal_pub_;    // Pubs to grippers "output" topic
 
     GripperOutput goal_reg_state_;    // Goal information in gripper-register form
     GripperInput current_reg_state_;  // State info in gripper-register form
