@@ -21,8 +21,8 @@
 
 namespace robotiq_2f_gripper_action_server
 {
-typedef robotiq_2f_gripper_control::Robotiq2FGripper_robot_input GripperInput;
-typedef robotiq_2f_gripper_control::Robotiq2FGripper_robot_output GripperOutput;
+typedef robotiq_2f_gripper_control::Robotiq2FGripperRobotInput GripperInput;
+typedef robotiq_2f_gripper_control::Robotiq2FGripperRobotOutput GripperOutput;
 
 typedef control_msgs::GripperCommandGoal GripperCommandGoal;
 typedef control_msgs::GripperCommandFeedback GripperCommandFeedback;

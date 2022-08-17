@@ -26,16 +26,20 @@ int main(int argc, char** argv)
     rclcpp::Node private_n;
 
     std::string gripper_name;
-    private_n.param<std::string>("gripper_name", gripper_name, "gripper");
+    private_n.get_parameter_or<std::string>("gripper_name", gripper_name, "gripper");
 
     // Fill out 2F-Gripper Params
     robotiq_2f_gripper_action_server::Robotiq2FGripperParams cparams = c2_85_defaults();
 
     // Min because fingers can push forward before the mechanical stops are reached
-    private_n.param<double>("min_gap", cparams.min_gap_, cparams.min_gap_);
-    private_n.param<double>("max_gap", cparams.max_gap_, cparams.max_gap_);
-    private_n.param<double>("min_effort", cparams.min_effort_, cparams.min_effort_);
-    private_n.param<double>("max_effort", cparams.max_effort_, cparams.max_effort_);
+    //private_n.parame<double>("min_gap", cparams.min_gap_, cparams.min_gap_);
+    //private_n.param<double>("max_gap", cparams.max_gap_, cparams.max_gap_);
+    //private_n.param<double>("min_effort", cparams.min_effort_, cparams.min_effort_);
+    //private_n.param<double>("max_effort", cparams.max_effort_, cparams.max_effort_);
+    private_n.get_parameter_or<double>("min_gap", cparams.min_gap_, cparams.min_gap_);
+    private_n.get_parameter_or<double>("max_gap", cparams.max_gap_, cparams.max_gap_);
+    private_n.get_parameter_or<double>("min_effort", cparams.min_effort_, cparams.min_effort_);
+    private_n.get_parameter_or<double>("max_effort", cparams.max_effort_, cparams.max_effort_);
 
     //ROS_INFO("Initializing Robotiq action server for gripper: %s", gripper_name.c_str());
     RCLCPP_INFO(private_n->get_logger(), "Initializing Robotiq action server for gripper: %s", gripper_name.c_str());
