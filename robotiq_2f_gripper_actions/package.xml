@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>robotiq_2f_gripper_action_server</name>
+  <name>robotiq_2f_gripper_actions</name>
   <version>0.21.0</version>
-  <description>C++ action tutorial cpp code</description>
+  <description>Robotiq_2f_85_Gripper action</description>
 
   <maintainer email="audrow@openrobotics.org">Audrow Nash</maintainer>
   <maintainer email="michael.jeronimo@openrobotics.org">Michael Jeronimo</maintainer>
@@ -14,16 +14,16 @@
   <author email="mabel@openrobotics.org">Mabel Zhang</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
 
-  <depend>robotiq_2f_gripper_actions</depend>
-  <depend>rclcpp</depend>
-  <depend>rclcpp_action</depend>
-  <depend>rclcpp_components</depend>
-  <depend>robotiq_2f_gripper_control</depend>
+  <depend>action_msgs</depend>
+
+  <exec_depend>rosidl_default_runtime</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <member_of_group>rosidl_interface_packages</member_of_group>
   <export>
     <build_type>ament_cmake</build_type>
   </export>

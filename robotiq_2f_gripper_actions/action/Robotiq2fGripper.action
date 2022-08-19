@@ -1,0 +1,20 @@
+#request
+
+#goal_position - open the gripper to anything between 0 and 0.085 meters
+float32 goal_position
+#force - value between 0 and 255 for the gripper force
+int8 force 
+
+---
+
+#result
+
+#final_position - the position the robot reached 
+float32 final_position
+
+---
+
+#feedback
+
+#current_position - the position the gripper is currently at
+float32 current_position
