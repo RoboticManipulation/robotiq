@@ -26,15 +26,9 @@ find_package(robotiq_2f_gripper_control REQUIRED)
 include_directories(include)
 
 add_library(robotiq SHARED
-<<<<<<< HEAD
   src/robotiq_2f_gripper_action_client.cpp
   src/robotiq_2f_gripper_action_server.cpp)
 rclcpp_components_register_node(robotiq PLUGIN "robotiq_2f_gripper_action_server::Robotiq2FGripperActionClient" EXECUTABLE robotiq_2f_gripper_action_client)
-=======
-  #src/fibonacci_action_client.cpp
-  src/robotiq_2f_gripper_action_server.cpp)
-#rclcpp_components_register_node(action_tutorials PLUGIN #"action_tutorials_cpp::FibonacciActionClient" EXECUTABLE fibonacci_action_client)
->>>>>>> 3c6380d9d4cdbe009008598c588f64ec42bcab15
 rclcpp_components_register_node(robotiq PLUGIN "robotiq_2f_gripper_action_server::Robotiq2FGripperActionServer" EXECUTABLE robotiq_2f_gripper_action_server)
 target_compile_definitions(robotiq
   PRIVATE "ROBOTIQ_2F_GRIPPER_ACTION_SERVER_BUILDING_DLL")
