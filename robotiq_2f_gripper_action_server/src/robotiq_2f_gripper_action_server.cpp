@@ -1,210 +1,222 @@
-/**
- * ActionServer interface to the control_msgs/GripperCommand action
- * for a Robotiq 2F gripper
- */
+#include <functional>
+#include <memory>
+#include <thread>
+#include <string>
 
-#include "robotiq_2f_gripper_action_server/robotiq_2f_gripper_action_server.h"
+// #include "action_tutorials_interfaces/action/fibonacci.hpp"
+#include <robotiq_2f_gripper_actions/action/robotiq2f_gripper.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <rclcpp_action/rclcpp_action.hpp>
+#include <rclcpp_components/register_node_macro.hpp>
+using std::placeholders::_1;
 
-// To keep the fully qualified names managable
+//#include <robotiq_2f_gripper_action_server/visibility_control.h>
 
-// Anonymous namespaces are file local -> sort of like global static objects
-namespace
-{
-using namespace robotiq_2f_gripper_action_server;
+#include <robotiq_2f_gripper_control/msg/robotiq2_f_gripper_robot_input.hpp>
+#include <robotiq_2f_gripper_control/msg/robotiq2_f_gripper_robot_output.hpp>
 
-/*  This struct is declared for the sole purpose of being used as an exception internally
-    to keep the code clean (i.e. no output params). It is caught by the action_server and
-    should not propogate outwards. If you use these functions yourself, beware.
-*/
-struct BadArgumentsError
-{
-};
 
-GripperOutput goalToRegisterState(const GripperCommandGoal& goal, const Robotiq2FGripperParams& params)
-{
-    GripperOutput result;
-    result.rACT = 0x1;  // active gripper
-    result.rGTO = 0x1;  // go to position
-    result.rATR = 0x0;  // No emergency release
-    result.rSP = 128;   // Middle ground speed
+typedef robotiq_2f_gripper_control::msg::Robotiq2FGripperRobotInput GripperInput;
+typedef robotiq_2f_gripper_control::msg::Robotiq2FGripperRobotOutput GripperOutput;
 
-    if (goal.command.position > params.max_gap_ || goal.command.position < params.min_gap_)
-    {
-        //ROS_WARN("Goal gripper gap size is out of range(%f to %f): %f m", params.min_gap_, params.max_gap_,
-        //         goal.command.position);
-        RCLCPP_WARN(n_->get_logger(), "Goal gripper gap size is out of range(%f to %f): %f m", params.min_gap_, params.max_gap_,goal.command.position);
-        throw BadArgumentsError();
-    }
 
-    if (goal.command.max_effort < params.min_effort_ || goal.command.max_effort > params.max_effort_)
-    {
-        //ROS_WARN("Goal gripper effort out of range (%f to %f N): %f N", params.min_effort_, params.max_effort_,
-        //         goal.command.max_effort);
-        RCLCPP_WARN(n_->get_logger(), "Goal gripper effort out of range (%f to %f N): %f N", params.min_effort_, params.max_effort_, goal.command.max_effort);
-        throw BadArgumentsError();
-    }
-
-    double dist_per_tick = (params.max_gap_ - params.min_gap_) / 255;
-    double eff_per_tick = (params.max_effort_ - params.min_effort_) / 255;
-
-    result.rPR = static_cast<uint8_t>((params.max_gap_ - goal.command.position) / dist_per_tick);
-    result.rFR = static_cast<uint8_t>((goal.command.max_effort - params.min_effort_) / eff_per_tick);
-
-    //ROS_INFO("Setting goal position register to %hhu", result.rPR);
-    RCLCPP_INFO(n_->get_logger(), "Setting goal position register to %hhu", result.rPR);
-
-    return result;
-}
-
-/*  This function is templatized because both GripperCommandResult and GripperCommandFeedback consist
-    of the same fields yet have different types. Templates here act as a "duck typing" mechanism to avoid
-    code duplication.
-*/
-template <typename T>
-T registerStateToResultT(const GripperInput& input, const Robotiq2FGripperParams& params, uint8_t goal_pos)
-{
-    T result;
-    double dist_per_tick = (params.max_gap_ - params.min_gap_) / 255;
-    double eff_per_tick = (params.max_effort_ - params.min_effort_) / 255;
-
-    result.position = input.gPO * dist_per_tick + params.min_gap_;
-    result.effort = input.gCU * eff_per_tick + params.min_effort_;
-    result.stalled = input.gOBJ == 0x1 || input.gOBJ == 0x2;
-    result.reached_goal = input.gPO == goal_pos;
-
-    return result;
-}
-
-// Inline api-transformers to avoid confusion when reading the action_server source
-inline GripperCommandResult registerStateToResult(const GripperInput& input, const Robotiq2FGripperParams& params,
-                                                  uint8_t goal_pos)
-{
-    return registerStateToResultT<GripperCommandResult>(input, params, goal_pos);
-}
-
-inline GripperCommandFeedback registerStateToFeedback(const GripperInput& input, const Robotiq2FGripperParams& params,
-                                                      uint8_t goal_pos)
-{
-    return registerStateToResultT<GripperCommandFeedback>(input, params, goal_pos);
-}
-
-}  // namespace
 
 namespace robotiq_2f_gripper_action_server
 {
-Robotiq2FGripperActionServer::Robotiq2FGripperActionServer(const std::string& name, const Robotiq2FGripperParams& params)
-    //: nh_(), as_(nh_, name, false), action_name_(name), gripper_params_(params)
-    : n_(), action_name_(name), gripper_params_(params)
 
-    auto as_ = rclcpp_action::create_server(
-    n_,
-    name,
-    std::bind(&Robotiq2FGripperActionServer::handle_goal, this, std::placeholders::_1, std::placeholders::_2),
-    std::bind(&Robotiq2FGripperActionServer::handle_cancel, this, std::placeholders::_1),
-    std::bind(&Robotiq2FGripperActionServer::handle_accepted, this, std::placeholders::_1)
-    )
-{
-    //as_.registerGoalCallback(boost::bind(&Robotiq2FGripperActionServer::goalCB, this));
-    //as_.registerPreemptCallback(boost::bind(&Robotiq2FGripperActionServer::preemptCB, this));
+  
+    
+  struct Robotiq2FGripperParams
+  {
+    double min_gap_;  // meters
+    double max_gap_;
+    double min_effort_;  // N / (Nm)
+    double max_effort_;
+  };
 
-    //state_sub_ = n_.subscribe("input", 1, &Robotiq2FGripperActionServer::analysisCB, this);
-    //goal_pub_ = n_.advertise<GripperOutput>("output", 1);
-    auto state_sub_ = n->create_subscription<GripperInput>("GripperInput", 100, &Robotiq2FGripperActionServer::analysisCB, this, _1);
-    auto goal_pub = n_->create_publisher<GripperOutput>("GripperOutput", 100);
+  // Defines a default for the c2 model 85 gripper
+  Robotiq2FGripperParams c2_85_defaults()
+  {
+      robotiq_2f_gripper_action_server::Robotiq2FGripperParams params;
+      params.min_gap_ = -.017;
+      params.max_gap_ = 0.085;
+      params.min_effort_ = 40.0;  // This is a guess. Could not find data with quick search.
+      params.max_effort_ = 100.0;
 
-    //as_.start();
-}
+      return params;
+  }
 
-void Robotiq2FGripperActionServer::goalCB()
-{
-    // Check to see if the gripper is in an active state where it can take goals
-    if (current_reg_state_.gSTA != 0x3)
+  class Robotiq2fGripperActionServer : public rclcpp::Node
+  {
+  public:
+    using Robotiq2fGripper = robotiq_2f_gripper_actions::action::Robotiq2fGripper;
+    using GoalHandleRobotiq2fGripper = rclcpp_action::ServerGoalHandle<Robotiq2fGripper>;
+
+    GripperInput current_state_;
+    GripperOutput goal_state_;
+    std::string action_name_ ;
+
+
+    //ROBOTIQ_2F_GRIPPER_ACTION_SERVER_PUBLIC
+    explicit Robotiq2fGripperActionServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions())
+    : Node("robotiq_2f_gripper_action_server", options)
+      
     {
-        //ROS_WARN("%s could not accept goal because the gripper is not yet active", action_name_.c_str());
-        RCLCPP_WARN(n_->get_logger(), "%s could not accept goal because the gripper is not yet active", action_name_.c_str());
-        return;
+      using namespace std::placeholders;
+
+      action_name_ = "gripper";
+      
+
+      this->action_server_ = rclcpp_action::create_server<Robotiq2fGripper>(
+        this->get_node_base_interface(),
+        this->get_node_clock_interface(),
+        this->get_node_logging_interface(),
+        this->get_node_waitables_interface(),
+        action_name_,
+        std::bind(&Robotiq2fGripperActionServer::handle_goal, this, _1, _2),
+        std::bind(&Robotiq2fGripperActionServer::handle_cancel, this, _1),
+        std::bind(&Robotiq2fGripperActionServer::handle_accepted, this, _1));
+
+      state_subscriber_ = this->create_subscription<GripperInput>(
+        "Robotiq2fGripperRobotInput", 10, std::bind(&Robotiq2fGripperActionServer::state_callback, this, _1));
+
+       goal_publisher_ = this->create_publisher<GripperOutput>("Robotiq2fGripperRobotOutput", 10);
+      
     }
 
-    GripperCommandGoal current_goal(*(as_.acceptNewGoal()));
-
-    if (as_.isPreemptRequested())
+  private:
+    rclcpp_action::Server<Robotiq2fGripper>::SharedPtr action_server_;
+    rclcpp::Subscription<GripperInput>::SharedPtr state_subscriber_;
+    rclcpp::Publisher<GripperOutput>::SharedPtr goal_publisher_;
+    //ROBOTIQ_2f_GRIPPER_ACTION_SERVER_LOCAL
+    void state_callback(const GripperInput::SharedPtr msg)
     {
-        as_.setPreempted();
+      this->current_state_ = *msg;
+
+      if (this->current_state_.g_sta != 0x3)
+      {
+          // Check to see if the gripper is active or if it has been asked to be active
+          if (current_state_.g_sta == 0x0 && goal_state_.r_act != 0x1)
+          {
+              // If it hasn't been asked, active it
+              RCLCPP_INFO(this->get_logger(),"Activating gripper for gripper action server: %s", action_name_.c_str());
+              GripperOutput out;
+              out.r_act = 0x1;
+              // other params should be zero
+              goal_state_ = out;
+              goal_publisher_->publish(out);
+          }
+
+          // Otherwise wait for the gripper to activate
+          // TODO: If message delivery isn't guaranteed, then we may want to resend activate
+          
+      }
+
+    }
+    
+    //ROBOTIQ_2f_GRIPPER_ACTION_SERVER_LOCAL
+    rclcpp_action::GoalResponse handle_goal( const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const Robotiq2fGripper::Goal> goal)
+    {
+      RCLCPP_INFO(this->get_logger(), "Received goal request");
+      (void)uuid;
+
+      if (current_state_.g_sta != 0x3)
+      {
+          RCLCPP_WARN(this->get_logger(),"%s could not accept goal because the gripper is not yet active", action_name_.c_str());
+          return rclcpp_action::GoalResponse::REJECT;
+      }
+      else if ((goal->goal_position > 0.085) || (goal->goal_position < 0.0))
+      {
+        RCLCPP_WARN(this->get_logger(),"%s could not accept goal because those values are too big/small", action_name_.c_str());
+        return rclcpp_action::GoalResponse::REJECT;
+      }
+      else
+      {
+        return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+      }
     }
 
-    try
+
+    //ROBOTIQ_2f_GRIPPER_ACTION_SERVER_LOCAL
+    rclcpp_action::CancelResponse handle_cancel(const std::shared_ptr<GoalHandleRobotiq2fGripper> goal_handle)
     {
-        goal_reg_state_ = goalToRegisterState(current_goal, gripper_params_);
-        goal_pub_.publish(goal_reg_state_);
-    }
-    catch (BadArgumentsError& e)
-    {
-        //ROS_INFO("%s No goal issued to gripper", action_name_.c_str());
-        RCLCPP_INFO(n_->get_logger(), "%s No goal issued to gripper", action_name_.c_str());
-    }
-}
-
-void Robotiq2FGripperActionServer::preemptCB()
-{
-    //ROS_INFO("%s: Preempted", action_name_.c_str());
-    RCLCPP_INFO(n_->get_logger(), "%s: Preempted", action_name_.c_str());
-    as_.setPreempted();
-}
-
-void Robotiq2FGripperActionServer::analysisCB(const GripperInput::ConstPtr& msg)
-{
-    current_reg_state_ = *msg;
-
-    if (!as_.isActive())
-        return;
-
-    // Check to see if the gripper is in its activated state
-    if (current_reg_state_.gSTA != 0x3)
-    {
-        // Check to see if the gripper is active or if it has been asked to be active
-        if (current_reg_state_.gSTA == 0x0 && goal_reg_state_.rACT != 0x1)
-        {
-            // If it hasn't been asked, active it
-            issueActivation();
-        }
-
-        // Otherwise wait for the gripper to activate
-        // TODO: If message delivery isn't guaranteed, then we may want to resend activate
-        return;
+      RCLCPP_INFO(this->get_logger(), "Received request to cancel goal");
+      (void)goal_handle;
+      return rclcpp_action::CancelResponse::ACCEPT;
     }
 
-    // Check for errors
-    if (current_reg_state_.gFLT)
-    {
-        //ROS_WARN("%s faulted with code: %x", action_name_.c_str(), current_reg_state_.gFLT);
-        RCLCPP_WARN(n_->get_logger(), "%s faulted with code: %x", action_name_.c_str(), current_reg_state_.gFLT);
 
-        as_.setAborted(registerStateToResult(current_reg_state_, gripper_params_, goal_reg_state_.rPR));
-    }
-    else if (current_reg_state_.gGTO && current_reg_state_.gOBJ && current_reg_state_.gPR == goal_reg_state_.rPR)
+    //ROBOTIQ_2f_GRIPPER_ACTION_SERVER_LOCAL
+    void handle_accepted(const std::shared_ptr<GoalHandleRobotiq2fGripper> goal_handle)
     {
-        // If commanded to move and if at a goal state and if the position request matches the echo'd PR, we're
-        // done with a move
-        //ROS_INFO("%s succeeded", action_name_.c_str());
-        RCLCPP_INFO(n_->get_logger(), "%s succeeded", action_name_.c_str());
-
-        as_.setSucceeded(registerStateToResult(current_reg_state_, gripper_params_, goal_reg_state_.rPR));
+      using namespace std::placeholders;
+      // this needs to return quickly to avoid blocking the executor, so spin up a new thread
+      std::thread{std::bind(&Robotiq2fGripperActionServer::execute, this, _1), goal_handle}.detach();
     }
-    else
+
+
+    //ROBOTIQ_2F_GRIPPER_ACTION_SERVER_LOCAL
+    void execute(const std::shared_ptr<GoalHandleRobotiq2fGripper> goal_handle)
     {
-        // Publish feedback
-        as_.publishFeedback(registerStateToFeedback(current_reg_state_, gripper_params_, goal_reg_state_.rPR));
-    }
-}
+      RCLCPP_INFO(this->get_logger(), "Executing goal");
 
-void Robotiq2FGripperActionServer::issueActivation()
-{
-    //ROS_INFO("Activating gripper for gripper action server: %s", action_name_.c_str());
-    RCLCPP_INFO(n_->get_logger(), "Activating gripper for gripper action server: %s", action_name_.c_str());
-    GripperOutput out;
-    out.rACT = 0x1;
-    // other params should be zero
-    goal_reg_state_ = out;
-    goal_pub_.publish(out);
-}
-}  // namespace robotiq_2f_gripper_action_server
+      rclcpp::Rate loop_rate(10);
+      const auto goal = goal_handle->get_goal();
+      Robotiq2FGripperParams params = c2_85_defaults();
+      double dist_per_tick = (params.max_gap_ - params.min_gap_) / 255;
+
+      auto feedback = std::make_shared<Robotiq2fGripper::Feedback>();
+      auto result = std::make_shared<Robotiq2fGripper::Result>();
+
+      GripperOutput output;
+      output.r_act = 0x1;  // active gripper
+      output.r_gto = 0x1;  // go to position
+      output.r_atr = 0x0;  // No emergency release
+      output.r_sp = 128;   // Middle ground speed
+
+      output.r_pr = static_cast<uint8_t>((params.max_gap_ - goal->goal_position) / dist_per_tick);
+
+      if (goal_handle->is_canceling()) 
+      {
+          result->final_position = current_state_.g_po;
+          goal_handle->canceled(result);
+          RCLCPP_INFO(this->get_logger(), "Goal canceled");
+          return;
+      }
+
+      RCLCPP_INFO(this->get_logger(),"Setting goal position register to %hhu", output.r_pr);
+
+      if (goal->force < 25)
+      {
+        output.r_fr = static_cast<uint8_t>(25);
+        RCLCPP_INFO(this->get_logger(),"Setting force to the minimum working value of 25");
+      }
+      else
+      {
+        output.r_fr = static_cast<uint8_t>(goal->force);
+      }
+
+      goal_state_ = output;
+      goal_publisher_->publish(goal_state_);
+
+      feedback->current_position = current_state_.g_po;
+      goal_handle->publish_feedback(feedback);
+      RCLCPP_INFO(this->get_logger(), "Publish feedback");
+
+      //loop_rate.sleep();
+
+
+      // Check if goal is done
+      if (rclcpp::ok()) {
+        result->final_position = current_state_.g_po;
+        goal_handle->succeed(result);
+        RCLCPP_INFO(this->get_logger(), "Goal succeeded");
+      }
+
+    }
+    
+  };  // class Robotiq_2f_Gripper_ActionServer
+
+}  // namespace robotiq_action_server
+
+RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_2f_gripper_action_server::Robotiq2fGripperActionServer)

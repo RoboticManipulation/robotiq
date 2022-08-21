@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(robotiq_2f_gripper_action_server)
+project(action_tutorials_cpp)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,7 +17,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(robotiq_2f_gripper_actions REQUIRED)
+find_package(action_tutorials_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_components REQUIRED)
@@ -25,13 +25,13 @@ find_package(robotiq_2f_gripper_control REQUIRED)
 
 include_directories(include)
 
-add_library(robotiq SHARED
-  src/robotiq_2f_gripper_action_client.cpp
+add_library(action_tutorials SHARED
+  #src/fibonacci_action_client.cpp
   src/robotiq_2f_gripper_action_server.cpp)
-rclcpp_components_register_node(robotiq PLUGIN "robotiq_2f_gripper_action_server::Robotiq2FGripperActionClient" EXECUTABLE robotiq_2f_gripper_action_client)
-rclcpp_components_register_node(robotiq PLUGIN "robotiq_2f_gripper_action_server::Robotiq2FGripperActionServer" EXECUTABLE robotiq_2f_gripper_action_server)
-target_compile_definitions(robotiq
-  PRIVATE "ROBOTIQ_2F_GRIPPER_ACTION_SERVER_BUILDING_DLL")
+#rclcpp_components_register_node(action_tutorials PLUGIN #"action_tutorials_cpp::FibonacciActionClient" EXECUTABLE fibonacci_action_client)
+rclcpp_components_register_node(action_tutorials PLUGIN "robotiq_2f_gripper_action_server::Robotiq2FGripperActionServer" EXECUTABLE robotiq_2f_gripper_action_server)
+target_compile_definitions(action_tutorials
+  PRIVATE "ACTION_TUTORIALS_CPP_BUILDING_DLL")
 ament_target_dependencies(robotiq
   "rclcpp"
   "rclcpp_action"
