@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(robotiq_2f_gripper_actions)
+project(robotiq_two_finger_gripper_actions)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -20,7 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "action/Robotiq2fGripper.action")
+  "action/RobotiqTwoFingerGripper.action")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

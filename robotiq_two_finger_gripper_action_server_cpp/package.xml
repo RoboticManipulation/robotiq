@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>robotiq_2f_gripper_action_server</name>
+  <name>robotiq_two_finger_gripper_action_server_cpp</name>
   <version>0.21.0</version>
   <description>C++ action tutorial cpp code</description>
 
@@ -15,7 +15,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <depend>robotiq_2f_gripper_actions</depend>
+  <depend>robotiq_two_finger_gripper_actions</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
   <depend>rclcpp_components</depend>
