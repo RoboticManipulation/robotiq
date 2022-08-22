@@ -74,8 +74,8 @@ public:
     }
 
     auto goal_msg = RobotiqTwoFingerGripper::Goal();
-    goal_msg.goal_position = 0.007;
-    goal_msg.force = 100;
+    goal_msg.goal_position = 0.05;
+    goal_msg.force = 50;
 
     RCLCPP_INFO(this->get_logger(), "Sending goal");
 
@@ -110,7 +110,7 @@ private:
     const std::shared_ptr<const RobotiqTwoFingerGripper::Feedback> feedback)
   {
     float position = feedback->current_position;
-    RCLCPP_INFO(this->get_logger(),"Recieved Feedback. Currently the gripper is %f cm wide", position);
+    RCLCPP_INFO(this->get_logger(),"Recieved Feedback. Currently the gripper is %f m wide", position);
 
   }
 
@@ -139,4 +139,15 @@ private:
 
 }  // namespace ROBOTIQ_TWO_FINGER_GRIPPER_ACTION_SERVER
 
-RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient)
+int main(int argc, char ** argv)
+{
+  rclcpp::init(argc, argv);
+  auto action_client = std::make_shared<robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient>();
+
+  rclcpp::spin(action_client);
+
+  rclcpp::shutdown();
+  return 0;
+}
+
+//RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient)

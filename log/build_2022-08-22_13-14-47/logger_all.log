@@ -1,0 +1,198 @@
+[0.139s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'robotiq_two_finger_gripper_action_server_cpp']
+[0.139s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f9cfc4f9c40>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=['robotiq_two_finger_gripper_action_server_cpp'], packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=8, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f9cfc4f9c40>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f9cfc5041f0>)
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.162s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.162s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/user/reitz/ros2/src/robotiq'
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.163s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.172s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extensions ['ignore', 'ignore_ament_install']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extension 'ignore'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extension 'ignore_ament_install'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extensions ['colcon_pkg']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extension 'colcon_pkg'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extensions ['colcon_meta']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extension 'colcon_meta'
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extensions ['ros']
+[0.173s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq) by extension 'ros'
+[0.175s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq' with type 'ros.catkin' and name 'robotiq'
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extensions ['ignore', 'ignore_ament_install']
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extension 'ignore'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extension 'ignore_ament_install'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extensions ['colcon_pkg']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extension 'colcon_pkg'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extensions ['colcon_meta']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extension 'colcon_meta'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extensions ['ros']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_85_gripper_visualization) by extension 'ros'
+[0.176s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_2f_85_gripper_visualization' with type 'ros.catkin' and name 'robotiq_2f_85_gripper_visualization'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extensions ['ignore', 'ignore_ament_install']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extension 'ignore'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extension 'ignore_ament_install'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extensions ['colcon_pkg']
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extension 'colcon_pkg'
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extensions ['colcon_meta']
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extension 'colcon_meta'
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extensions ['ros']
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_2f_gripper_control) by extension 'ros'
+[0.177s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_2f_gripper_control' with type 'ros.ament_cmake' and name 'robotiq_2f_gripper_control'
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extensions ['ignore', 'ignore_ament_install']
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extension 'ignore'
+[0.177s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extension 'ignore_ament_install'
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extensions ['colcon_pkg']
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extension 'colcon_pkg'
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extensions ['colcon_meta']
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extension 'colcon_meta'
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extensions ['ros']
+[0.178s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ethercat) by extension 'ros'
+[0.179s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_ethercat' with type 'ros.catkin' and name 'robotiq_ethercat'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extensions ['ignore', 'ignore_ament_install']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extension 'ignore'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extension 'ignore_ament_install'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extensions ['colcon_pkg']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extension 'colcon_pkg'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extensions ['colcon_meta']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extension 'colcon_meta'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extensions ['ros']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_ft_sensor) by extension 'ros'
+[0.180s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_ft_sensor' with type 'ros.catkin' and name 'robotiq_ft_sensor'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extensions ['ignore', 'ignore_ament_install']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extension 'ignore'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extension 'ignore_ament_install'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extensions ['colcon_pkg']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extension 'colcon_pkg'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extensions ['colcon_meta']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extension 'colcon_meta'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extensions ['ros']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_rtu) by extension 'ros'
+[0.181s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_modbus_rtu' with type 'ros.ament_cmake' and name 'robotiq_modbus_rtu'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extensions ['ignore', 'ignore_ament_install']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extension 'ignore'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extension 'ignore_ament_install'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extensions ['colcon_pkg']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extension 'colcon_pkg'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extensions ['colcon_meta']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extension 'colcon_meta'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extensions ['ros']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_modbus_tcp) by extension 'ros'
+[0.182s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_modbus_tcp' with type 'ros.catkin' and name 'robotiq_modbus_tcp'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extensions ['ignore', 'ignore_ament_install']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extension 'ignore'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extension 'ignore_ament_install'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extensions ['colcon_pkg']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extension 'colcon_pkg'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extensions ['colcon_meta']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extension 'colcon_meta'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extensions ['ros']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_action_server_cpp) by extension 'ros'
+[0.192s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_two_finger_gripper_action_server_cpp' with type 'ros.ament_cmake' and name 'robotiq_two_finger_gripper_action_server_cpp'
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extensions ['ignore', 'ignore_ament_install']
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extension 'ignore'
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extension 'ignore_ament_install'
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extensions ['colcon_pkg']
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extension 'colcon_pkg'
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extensions ['colcon_meta']
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extension 'colcon_meta'
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extensions ['ros']
+[0.192s] Level 1:colcon.colcon_core.package_identification:_identify(robotiq_two_finger_gripper_actions) by extension 'ros'
+[0.193s] DEBUG:colcon.colcon_core.package_identification:Package 'robotiq_two_finger_gripper_actions' with type 'ros.ament_cmake' and name 'robotiq_two_finger_gripper_actions'
+[0.193s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.193s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.193s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.193s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.193s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_2f_85_gripper_visualization' in 'robotiq_2f_85_gripper_visualization'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_2f_gripper_control' in 'robotiq_2f_gripper_control'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_ethercat' in 'robotiq_ethercat'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_ft_sensor' in 'robotiq_ft_sensor'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_modbus_rtu' in 'robotiq_modbus_rtu'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_modbus_tcp' in 'robotiq_modbus_tcp'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq_two_finger_gripper_actions' in 'robotiq_two_finger_gripper_actions'
+[0.211s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'robotiq' in 'robotiq'
+[0.212s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.212s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.216s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 8 installed packages in /home/user/reitz/ur_driver_ws/install
+[0.217s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 6 installed packages in /home/user/reitz/workspace_ur_moveit/install
+[0.218s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 3 installed packages in /home/hrl/ros2/realsense_driver_ws/install
+[0.218s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 2 installed packages in /home/hrl/ros2/ignition_driver_ws/install
+[0.219s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 8 installed packages in /home/hrl/ros2/ur_driver_ws/install
+[0.222s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 364 installed packages in /opt/ros/galactic
+[0.224s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.317s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_args' from command line to 'None'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_target' from command line to 'None'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_clean_cache' from command line to 'False'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_clean_first' from command line to 'False'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'cmake_force_configure' from command line to 'False'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'ament_cmake_args' from command line to 'None'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'catkin_cmake_args' from command line to 'None'
+[0.318s] Level 5:colcon.colcon_core.verb:set package 'robotiq_two_finger_gripper_action_server_cpp' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.318s] DEBUG:colcon.colcon_core.verb:Building package 'robotiq_two_finger_gripper_action_server_cpp' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/user/reitz/ros2/src/robotiq/build/robotiq_two_finger_gripper_action_server_cpp', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp', 'merge_install': False, 'path': '/home/user/reitz/ros2/src/robotiq/robotiq_two_finger_gripper_action_server_cpp', 'symlink_install': False, 'test_result_base': None}
+[0.319s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.322s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.323s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/user/reitz/ros2/src/robotiq/robotiq_two_finger_gripper_action_server_cpp' with build type 'ament_cmake'
+[0.323s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/user/reitz/ros2/src/robotiq/robotiq_two_finger_gripper_action_server_cpp'
+[0.330s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.330s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.330s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.339s] ERROR:colcon.colcon_cmake.task.cmake.build:Failed to find the following files:
+- /home/user/reitz/ros2/src/robotiq/install/robotiq_2f_gripper_control/share/robotiq_2f_gripper_control/package.sh
+- /home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_actions/share/robotiq_two_finger_gripper_actions/package.sh
+Check that the following packages have been built:
+- robotiq_2f_gripper_control
+- robotiq_two_finger_gripper_actions
+[0.339s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(robotiq_two_finger_gripper_action_server_cpp)
+[0.343s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp' for CMake module files
+[0.343s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp' for CMake config files
+[0.343s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/bin'
+[0.344s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/lib/pkgconfig/robotiq_two_finger_gripper_action_server_cpp.pc'
+[0.344s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/lib/python3.8/site-packages'
+[0.344s] Level 1:colcon.colcon_core.environment:checking '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/bin'
+[0.345s] INFO:colcon.colcon_core.shell:Creating package script '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/robotiq_two_finger_gripper_action_server_cpp/package.ps1'
+[0.346s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/robotiq_two_finger_gripper_action_server_cpp/package.dsv'
+[0.346s] INFO:colcon.colcon_core.shell:Creating package script '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/robotiq_two_finger_gripper_action_server_cpp/package.sh'
+[0.347s] INFO:colcon.colcon_core.shell:Creating package script '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/robotiq_two_finger_gripper_action_server_cpp/package.bash'
+[0.347s] INFO:colcon.colcon_core.shell:Creating package script '/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/robotiq_two_finger_gripper_action_server_cpp/package.zsh'
+[0.348s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/user/reitz/ros2/src/robotiq/install/robotiq_two_finger_gripper_action_server_cpp/share/colcon-core/packages/robotiq_two_finger_gripper_action_server_cpp)
+[0.358s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[0.358s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[0.358s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '1'
+[0.358s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[0.368s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[0.368s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[0.369s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[0.392s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[0.394s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/user/reitz/ros2/src/robotiq/install/local_setup.ps1'
+[0.395s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/user/reitz/ros2/src/robotiq/install/_local_setup_util_ps1.py'
+[0.397s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/user/reitz/ros2/src/robotiq/install/setup.ps1'
+[0.401s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/user/reitz/ros2/src/robotiq/install/local_setup.sh'
+[0.402s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/user/reitz/ros2/src/robotiq/install/_local_setup_util_sh.py'
+[0.402s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/user/reitz/ros2/src/robotiq/install/setup.sh'
+[0.405s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/user/reitz/ros2/src/robotiq/install/local_setup.bash'
+[0.406s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/user/reitz/ros2/src/robotiq/install/setup.bash'
+[0.408s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/user/reitz/ros2/src/robotiq/install/local_setup.zsh'
+[0.409s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/user/reitz/ros2/src/robotiq/install/setup.zsh'

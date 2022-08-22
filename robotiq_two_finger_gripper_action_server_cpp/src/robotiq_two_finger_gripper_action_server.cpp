@@ -1,3 +1,5 @@
+
+#include <chrono>
 #include <functional>
 #include <memory>
 #include <thread>
@@ -34,7 +36,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
   Robotiq2FGripperParams c2_85_defaults()
   {
       robotiq_two_finger_gripper_action_server_cpp::Robotiq2FGripperParams params;
-      params.min_gap_ = -.017;
+      params.min_gap_ = 0.0;
       params.max_gap_ = 0.085;
       params.min_effort_ = 40.0;  // This is a guess. Could not find data with quick search.
       params.max_effort_ = 100.0;
@@ -60,10 +62,24 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     {
       using namespace std::placeholders;
 
+         /* These define the callback groups
+       * They don't really do much on their own, but they have to exist in order to
+       * assign callbacks to them. They're also what the executor looks for when trying to run multiple threads
+       */
+      callback_group_publisher_ = this->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+      callback_group_subscriber_ = this->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+
+      // Each of these callback groups is basically a thread
+      // Everything assigned to one of them gets bundled into the same thread
+      auto sub2_opt = rclcpp::SubscriptionOptions();
+      sub2_opt.callback_group = callback_group_subscriber_;
+      auto sub3_opt = rclcpp::PublisherOptions();
+      sub3_opt.callback_group = callback_group_publisher_;
+
       action_name_ = "robotiq_two_finger_gripper";
 
-      current_state_.g_sta = 0x3;
-      current_state_.g_po = 42;
+      //current_state_.g_sta = 0x3;
+      //current_state_.g_po = 42;
       
 
       this->action_server_ = rclcpp_action::create_server<RobotiqTwoFingerGripper>(
@@ -76,10 +92,10 @@ namespace robotiq_two_finger_gripper_action_server_cpp
         std::bind(&RobotiqTwoFingerGripperActionServer::handle_cancel, this, _1),
         std::bind(&RobotiqTwoFingerGripperActionServer::handle_accepted, this, _1));
 
-      //state_subscriber_ = this->create_subscription<GripperInput>(
-      //  "Robotiq2fGripperRobotInput", 10, std::bind(&RobotiqTwoFingerGripperActionServer::state_callback, this, _1));
+      state_subscriber_ = this->create_subscription<GripperInput>(
+        "Robotiq2FGripperRobotInput", 10, std::bind(&RobotiqTwoFingerGripperActionServer::state_callback, this, _1),sub2_opt);
 
-      goal_publisher_ = this->create_publisher<GripperOutput>("Robotiq2fGripperRobotOutput", 10);
+      goal_publisher_ = this->create_publisher<GripperOutput>("Robotiq2FGripperRobotOutput", 10, sub3_opt);
       
     }
 
@@ -88,13 +104,17 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     rclcpp::Subscription<GripperInput>::SharedPtr state_subscriber_;
     rclcpp::Publisher<GripperOutput>::SharedPtr goal_publisher_;
 
-    /*
+    rclcpp::CallbackGroup::SharedPtr callback_group_server_;
+    rclcpp::CallbackGroup::SharedPtr callback_group_subscriber_;
+    rclcpp::CallbackGroup::SharedPtr callback_group_publisher_;
+
+    
     ROBOTIQ_TWO_FINGER_GRIPPER_ACTION_SERVER_LOCAL
     void state_callback(const GripperInput::SharedPtr msg)
     {
       this->current_state_ = *msg;
 
-      if (this->current_state_.g_sta != 0x3)
+      /*if (this->current_state_.g_sta != 0x3)
       {
           // Check to see if the gripper is active or if it has been asked to be active
           if (current_state_.g_sta == 0x0 && goal_state_.r_act != 0x1)
@@ -112,9 +132,9 @@ namespace robotiq_two_finger_gripper_action_server_cpp
           // TODO: If message delivery isn't guaranteed, then we may want to resend activate
           
       }
-
+*/
     }
-    */
+    
     
     ROBOTIQ_TWO_FINGER_GRIPPER_ACTION_SERVER_LOCAL
     rclcpp_action::GoalResponse handle_goal( const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const RobotiqTwoFingerGripper::Goal> goal)
@@ -174,13 +194,14 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       output.r_act = 0x1;  // active gripper
       output.r_gto = 0x1;  // go to position
       output.r_atr = 0x0;  // No emergency release
-      output.r_sp = 128;   // Middle ground speed
+      output.r_sp = 150;   // Middle ground speed
 
+      RCLCPP_INFO(this->get_logger(),"per tick: %lf, goal: %f", dist_per_tick, goal->goal_position);
       output.r_pr = static_cast<uint8_t>((params.max_gap_ - goal->goal_position) / dist_per_tick);
 
       if (goal_handle->is_canceling()) 
       {
-          result->final_position = current_state_.g_po;
+          result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
           goal_handle->canceled(result);
           RCLCPP_INFO(this->get_logger(), "Goal canceled");
           return;
@@ -201,7 +222,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       goal_state_ = output;
       goal_publisher_->publish(goal_state_);
 
-      feedback->current_position = current_state_.g_po;
+      feedback->current_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
       goal_handle->publish_feedback(feedback);
       RCLCPP_INFO(this->get_logger(), "Publish feedback");
 
@@ -210,27 +231,38 @@ namespace robotiq_two_finger_gripper_action_server_cpp
 
       // Check if goal is done
       if (rclcpp::ok()) {
-        result->final_position = current_state_.g_po;
-        goal_handle->succeed(result);
-        RCLCPP_INFO(this->get_logger(), "Goal succeeded");
+
+        if ((current_state_.g_po >= ((params.max_gap_ - goal->goal_position) / dist_per_tick)-10) &&
+           (current_state_.g_po <= ((params.max_gap_ - goal->goal_position) / dist_per_tick)+10))
+        {
+          result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
+          goal_handle->succeed(result);
+          RCLCPP_INFO(this->get_logger(), "Goal succeeded");
+        }
       }
 
     }
     
   };  // class Robotiq_TwoFinger_Gripper_ActionServer
 
-  int main(int argc, char ** argv)
-  {
-    rclcpp::init(argc, argv);
-
-    auto action_server = std::make_shared<RobotiqTwoFingerGripperActionServer>();
-
-    rclcpp::spin(action_server);
-
-    rclcpp::shutdown();
-    return 0;
-  }
-
 }  // namespace robotiq_action_server
 
-RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionServer)
+int main(int argc, char ** argv)
+{
+  rclcpp::init(argc, argv);
+
+  auto action_server = std::make_shared<robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionServer>();
+
+  rclcpp::executors::MultiThreadedExecutor executor;
+                                                        
+  executor.add_node(action_server);
+  executor.spin();
+
+  rclcpp::spin(action_server);
+
+  rclcpp::shutdown();
+  return 0;
+}
+
+
+//RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionServer)

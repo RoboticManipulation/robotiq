@@ -3,7 +3,7 @@
 #goal_position - open the gripper to anything between 0 and 0.085 meters
 float32 goal_position
 #force - value between 0 and 255 for the gripper force
-int8 force 
+uint8 force 
 
 ---
 
