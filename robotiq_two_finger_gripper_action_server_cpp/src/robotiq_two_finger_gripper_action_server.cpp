@@ -182,7 +182,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     {
       RCLCPP_INFO(this->get_logger(), "Executing goal");
 
-      rclcpp::Rate loop_rate(0.5);
+      rclcpp::Rate loop_rate(5);
       const auto goal = goal_handle->get_goal();
       Robotiq2FGripperParams params = c2_85_defaults();
       double dist_per_tick = (params.max_gap_ - params.min_gap_) / 255;
