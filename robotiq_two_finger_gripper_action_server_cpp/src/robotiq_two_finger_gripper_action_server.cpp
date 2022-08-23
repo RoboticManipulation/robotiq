@@ -104,7 +104,6 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     rclcpp::Subscription<GripperInput>::SharedPtr state_subscriber_;
     rclcpp::Publisher<GripperOutput>::SharedPtr goal_publisher_;
 
-    rclcpp::CallbackGroup::SharedPtr callback_group_server_;
     rclcpp::CallbackGroup::SharedPtr callback_group_subscriber_;
     rclcpp::CallbackGroup::SharedPtr callback_group_publisher_;
 
@@ -218,8 +217,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
 
       //the server needs to sleep for a bit, otherwise the current_status_.g_obj will not yet be updated and therefore not start thw while loop
 
-      loop_rate.sleep();
-      loop_rate.sleep();
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
       while (current_state_.g_obj == 0x0)
       {
