@@ -113,8 +113,9 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     void state_callback(const GripperInput::SharedPtr msg)
     {
       this->current_state_ = *msg;
+      //RCLCPP_INFO(this->get_logger(), "updating status");
 
-      /*if (this->current_state_.g_sta != 0x3)
+      if (this->current_state_.g_sta != 0x3)
       {
           // Check to see if the gripper is active or if it has been asked to be active
           if (current_state_.g_sta == 0x0 && goal_state_.r_act != 0x1)
@@ -127,12 +128,8 @@ namespace robotiq_two_finger_gripper_action_server_cpp
               goal_state_ = out;
               goal_publisher_->publish(out);
           }
-
           // Otherwise wait for the gripper to activate
-          // TODO: If message delivery isn't guaranteed, then we may want to resend activate
-          
       }
-*/
     }
     
     
@@ -182,10 +179,15 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     {
       RCLCPP_INFO(this->get_logger(), "Executing goal");
 
+
+      //WARNING: increasing the looprate may result in the server spinning to quick for the subscriber,
+      //         so some status variables will not be up to date and break the loop
+
       rclcpp::Rate loop_rate(5);
       const auto goal = goal_handle->get_goal();
       Robotiq2FGripperParams params = c2_85_defaults();
-      double dist_per_tick = (params.max_gap_ - params.min_gap_) / 255;
+      //we only consider 230 steps instead of the full 255 range, because the gripper does not close further beyond 230
+      double dist_per_tick = (params.max_gap_ - params.min_gap_) / 230;
 
       auto feedback = std::make_shared<RobotiqTwoFingerGripper::Feedback>();
       auto result = std::make_shared<RobotiqTwoFingerGripper::Result>();
@@ -194,18 +196,10 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       output.r_act = 0x1;  // active gripper
       output.r_gto = 0x1;  // go to position
       output.r_atr = 0x0;  // No emergency release
-      output.r_sp = 150;   // Middle ground speed
+      output.r_sp = 100;   // Middle ground speed
 
       RCLCPP_INFO(this->get_logger(),"per tick: %lf, goal: %f", dist_per_tick, goal->goal_position);
       output.r_pr = static_cast<uint8_t>((params.max_gap_ - goal->goal_position) / dist_per_tick);
-
-      if (goal_handle->is_canceling()) 
-      {
-          result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
-          goal_handle->canceled(result);
-          RCLCPP_INFO(this->get_logger(), "Goal canceled");
-          return;
-      }
 
       RCLCPP_INFO(this->get_logger(),"Setting goal position register to %hhu", output.r_pr);
 
@@ -222,23 +216,44 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       goal_state_ = output;
       goal_publisher_->publish(goal_state_);
 
-      feedback->current_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
-      goal_handle->publish_feedback(feedback);
-      RCLCPP_INFO(this->get_logger(), "Publish feedback");
+      //the server needs to sleep for a bit, otherwise the current_status_.g_obj will not yet be updated and therefore not start thw while loop
 
       loop_rate.sleep();
+      loop_rate.sleep();
 
+      while (current_state_.g_obj == 0x0)
+      {
+        if (goal_handle->is_canceling()) 
+        {
+            result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
+            goal_handle->canceled(result);
+            RCLCPP_INFO(this->get_logger(), "Goal canceled");
+            return;
+        }
+
+        feedback->current_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
+        goal_handle->publish_feedback(feedback);
+        RCLCPP_INFO(this->get_logger(), "Publish feedback");
+
+        loop_rate.sleep();
+      }
 
       // Check if goal is done
-      if (rclcpp::ok()) {
-
-        if ((current_state_.g_po >= ((params.max_gap_ - goal->goal_position) / dist_per_tick)-10) &&
-           (current_state_.g_po <= ((params.max_gap_ - goal->goal_position) / dist_per_tick)+10))
+      if (rclcpp::ok()) 
+      {
+        if ((current_state_.g_obj == 0x1)||(current_state_.g_obj == 0x2))
+        {
+          result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
+          goal_handle->abort(result);
+          RCLCPP_INFO(this->get_logger(), "Goal aborted, fingers where stopped due to object contact");
+        }
+        else if (current_state_.g_obj == 0x3)
         {
           result->final_position = (params.max_gap_-(current_state_.g_po * dist_per_tick));
           goal_handle->succeed(result);
-          RCLCPP_INFO(this->get_logger(), "Goal succeeded");
+          RCLCPP_INFO(this->get_logger(), "Reached Goal");
         }
+        
       }
 
     }

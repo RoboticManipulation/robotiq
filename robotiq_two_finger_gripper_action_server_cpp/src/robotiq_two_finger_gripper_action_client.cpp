@@ -74,7 +74,7 @@ public:
     }
 
     auto goal_msg = RobotiqTwoFingerGripper::Goal();
-    goal_msg.goal_position = 0.05;
+    goal_msg.goal_position = 0.8;
     goal_msg.force = 50;
 
     RCLCPP_INFO(this->get_logger(), "Sending goal");
@@ -121,7 +121,7 @@ private:
       case rclcpp_action::ResultCode::SUCCEEDED:
         break;
       case rclcpp_action::ResultCode::ABORTED:
-        RCLCPP_ERROR(this->get_logger(), "Goal was aborted");
+        RCLCPP_ERROR(this->get_logger(), "Goal was aborted due to object contact");
         return;
       case rclcpp_action::ResultCode::CANCELED:
         RCLCPP_ERROR(this->get_logger(), "Goal was canceled");
