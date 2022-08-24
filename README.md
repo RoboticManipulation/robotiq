@@ -2,6 +2,8 @@
 
 ## Status
 
+##test
+
 This repository (fork of [ros-industrial](https://github.com/ros-industrial/robotiq)) is now ***maintained*** by TAMS group from Univeristy of Hamburg.
 
 ## Bluetooth interface
