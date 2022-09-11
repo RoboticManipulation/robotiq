@@ -109,7 +109,7 @@ int main(int argc, char ** argv)
   rclcpp::init(argc, argv);
   g_node = rclcpp::Node::make_shared("robotiq_two_finger_gripper_action_client");
 
-  float goal_position = 0.08;
+  float goal_position = 0.05;
   int force = 50;
 
   bool success = false;

@@ -143,7 +143,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
           RCLCPP_WARN(this->get_logger(),"%s could not accept goal because the gripper is not yet active", action_name_.c_str());
           return rclcpp_action::GoalResponse::REJECT;
       }
-      else if ((goal->goal_position > 0.085) || (goal->goal_position < 0.0))
+      else if ((goal->goal_position > 0.086) || (goal->goal_position < 0.0))
       {
         RCLCPP_WARN(this->get_logger(),"%s could not accept goal because those values are too big/small", action_name_.c_str());
         return rclcpp_action::GoalResponse::REJECT;
