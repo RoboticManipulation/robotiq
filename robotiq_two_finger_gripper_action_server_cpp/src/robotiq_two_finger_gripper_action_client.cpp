@@ -139,15 +139,15 @@ private:
 
 }  // namespace ROBOTIQ_TWO_FINGER_GRIPPER_ACTION_SERVER
 
-int main(int argc, char ** argv)
-{
-  rclcpp::init(argc, argv);
-  auto action_client = std::make_shared<robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient>();
+// int main(int argc, char ** argv)
+// {
+//   rclcpp::init(argc, argv);
+//   auto action_client = std::make_shared<robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient>();
 
-  rclcpp::spin(action_client);
+//   rclcpp::spin(action_client);
 
-  rclcpp::shutdown();
-  return 0;
-}
+//   rclcpp::shutdown();
+//   return 0;
+// }
 
 //RCLCPP_COMPONENTS_REGISTER_NODE(robotiq_two_finger_gripper_action_server_cpp::RobotiqTwoFingerGripperActionClient)
