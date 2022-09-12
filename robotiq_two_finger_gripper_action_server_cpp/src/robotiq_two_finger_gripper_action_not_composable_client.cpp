@@ -13,16 +13,14 @@
 #include <robotiq_2f_gripper_control/msg/robotiq2_f_gripper_robot_output.hpp>
 
 using RobotiqTwoFingerGripper = robotiq_two_finger_gripper_actions::action::RobotiqTwoFingerGripper;
-rclcpp::Node::SharedPtr g_node = nullptr;
 
-
-void feedback_callback(
-  rclcpp_action::ClientGoalHandle<RobotiqTwoFingerGripper>::SharedPtr,
-  const std::shared_ptr<const RobotiqTwoFingerGripper::Feedback> feedback)
-{
-    float position = feedback->current_position;
-    RCLCPP_INFO(g_node->get_logger(),"Received feedback. Currently the gripper is %f m wide", position);
-}
+// void feedback_callback(
+//   rclcpp_action::ClientGoalHandle<RobotiqTwoFingerGripper>::SharedPtr,
+//   const std::shared_ptr<const RobotiqTwoFingerGripper::Feedback> feedback)
+// {
+//     float position = feedback->current_position;
+//     RCLCPP_INFO(g_node->get_logger(),"Received feedback. Currently the gripper is %f m wide", position);
+// }
 
 std::tuple<bool, float> execute_gripper_action(rclcpp::Node::SharedPtr g_node, float goal_position, int force){
   bool success = false;
@@ -44,7 +42,7 @@ std::tuple<bool, float> execute_gripper_action(rclcpp::Node::SharedPtr g_node, f
   RCLCPP_INFO(g_node->get_logger(), "Sending goal");
   // Ask server to achieve some goal and wait until it's accepted
   auto send_goal_options = rclcpp_action::Client<RobotiqTwoFingerGripper>::SendGoalOptions();
-  send_goal_options.feedback_callback = feedback_callback;
+  // send_goal_options.feedback_callback = feedback_callback;
   auto goal_handle_future = gripper_action_client->async_send_goal(goal_msg, send_goal_options);
 
   if (rclcpp::spin_until_future_complete(g_node, goal_handle_future) !=
@@ -107,7 +105,7 @@ std::tuple<bool, float> execute_gripper_action(rclcpp::Node::SharedPtr g_node, f
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  g_node = rclcpp::Node::make_shared("robotiq_two_finger_gripper_action_client");
+  rclcpp::Node::SharedPtr g_node = rclcpp::Node::make_shared("robotiq_two_finger_gripper_action_client");
 
   float goal_position = 0.05;
   int force = 50;
