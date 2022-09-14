@@ -236,6 +236,18 @@ namespace robotiq_two_finger_gripper_action_server_cpp
         loop_rate.sleep();
       }
 
+      // Info about meanings of status
+      //# g_obj
+      //output += "g_obj = " + str(status.g_obj) + ": "
+      //if status.g_obj == 0:
+      //    output += "Fingers are in motion (only meaningful if gGTO = 1)\n"
+      //if status.g_obj == 1:
+      //    output += "Fingers have stopped due to a contact while opening\n"
+      //if status.g_obj == 2:
+      //    output += "Fingers have stopped due to a contact while closing \n"
+      //if status.g_obj == 3:
+      //    output += "Fingers are at requested position\n"
+
       // Check if goal is done
       if (rclcpp::ok()) 
       {

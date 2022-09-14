@@ -74,7 +74,7 @@ public:
     }
 
     auto goal_msg = RobotiqTwoFingerGripper::Goal();
-    goal_msg.goal_position = 0.06;
+    goal_msg.goal_position = 0.02;
     goal_msg.force = 50;
 
     RCLCPP_INFO(this->get_logger(), "Sending goal");
