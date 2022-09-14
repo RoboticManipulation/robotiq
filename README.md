@@ -9,6 +9,10 @@ This repository (fork of [ros-industrial](https://github.com/ros-industrial/robo
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 ## ROS2 Installation
+Install python package (has to be version 1.3.1)
+
+    pip install pymodbus==1.3.1
+
 Clone the repository and make sure to checkout the branch ros2-galactic.
 
     git clone git@github.com:RoboticManipulation/robotiq.git -b ros2-galactic
