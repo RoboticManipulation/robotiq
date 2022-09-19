@@ -52,6 +52,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
 
     GripperInput current_state_;
     std::string action_name_ ;
+    bool first_call_;
 
 
     ROBOTIQ_TWO_FINGER_GRIPPER_ACTION_SERVER_PUBLIC
@@ -76,6 +77,8 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       sub3_opt.callback_group = callback_group_publisher_;
 
       action_name_ = "robotiq_two_finger_gripper";
+
+      first_call_ = true;
 
       //current_state_.g_sta = 0x3;
       //current_state_.g_po = 42;
@@ -113,6 +116,16 @@ namespace robotiq_two_finger_gripper_action_server_cpp
       this->current_state_ = *msg;
       //RCLCPP_INFO(this->get_logger(), "updating status");
 
+      if (first_call_){
+
+        RCLCPP_INFO(this->get_logger(),"Reseting Gripper Status for: %s", action_name_.c_str());
+              GripperOutput out;
+              out.r_act = 0x0;
+              goal_publisher_->publish(out);
+              first_call_ = false;
+              std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      }
+
       if (this->current_state_.g_sta != 0x3)
       {
           // Check to see if the gripper is activating
@@ -124,6 +137,8 @@ namespace robotiq_two_finger_gripper_action_server_cpp
               out.r_act = 0x1;
               // other params should be zero
               goal_publisher_->publish(out);
+              std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
           }
           // Otherwise wait for the gripper to activate
       }
