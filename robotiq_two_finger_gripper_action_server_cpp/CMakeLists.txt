@@ -49,34 +49,34 @@ ament_target_dependencies(robotiq_two_finger_gripper_action_server_main
   "robotiq_2f_gripper_control")
 
 
-#add_executable(robotiq_two_finger_gripper_action_client_main src/robotiq_two_finger_gripper_action_client.cpp)
-#ament_target_dependencies(robotiq_two_finger_gripper_action_client_main
+add_executable(robotiq_two_finger_gripper_action_client_main src/robotiq_two_finger_gripper_action_client.cpp)
+ament_target_dependencies(robotiq_two_finger_gripper_action_client_main
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components"
+  "robotiq_two_finger_gripper_actions"
+  "robotiq_2f_gripper_control")
+
+#add_executable(robotiq_two_finger_gripper_action_client_test src/robotiq_two_finger_gripper_action_client_test.cpp)
+#ament_target_dependencies(robotiq_two_finger_gripper_action_client_test
 #  "rclcpp"
 #  "rclcpp_action"
 #  "rclcpp_components"
 #  "robotiq_two_finger_gripper_actions"
 #  "robotiq_2f_gripper_control")
 
-add_executable(robotiq_two_finger_gripper_action_client_test src/robotiq_two_finger_gripper_action_client_test.cpp)
-ament_target_dependencies(robotiq_two_finger_gripper_action_client_test
-  "rclcpp"
-  "rclcpp_action"
-  "rclcpp_components"
-  "robotiq_two_finger_gripper_actions"
-  "robotiq_2f_gripper_control")
-
-add_executable(robotiq_two_finger_gripper_action_not_composable_client src/robotiq_two_finger_gripper_action_not_composable_client.cpp)
-ament_target_dependencies(robotiq_two_finger_gripper_action_not_composable_client
-  "rclcpp"
-  "rclcpp_action"
-  "rclcpp_components"
-  "robotiq_two_finger_gripper_actions"
-  "robotiq_2f_gripper_control")
+#add_executable(robotiq_two_finger_gripper_action_not_composable_client src/robotiq_two_finger_gripper_action_not_composable_client.cpp)
+#ament_target_dependencies(robotiq_two_finger_gripper_action_not_composable_client
+#  "rclcpp"
+#  "rclcpp_action"
+#  "rclcpp_components"
+#  "robotiq_two_finger_gripper_actions"
+#  "robotiq_2f_gripper_control")
 
 install(TARGETS
-  #robotiq_two_finger_gripper_action_client_main
-  robotiq_two_finger_gripper_action_not_composable_client
-  robotiq_two_finger_gripper_action_client_test
+  robotiq_two_finger_gripper_action_client_main
+  #robotiq_two_finger_gripper_action_not_composable_client
+  #robotiq_two_finger_gripper_action_client_test
   robotiq_two_finger_gripper_action_server_main
   DESTINATION lib/${PROJECT_NAME}
   ARCHIVE DESTINATION lib
