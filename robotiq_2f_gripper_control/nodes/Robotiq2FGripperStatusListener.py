@@ -43,9 +43,7 @@ This serves as an example for receiving messages from the 'Robotiq2FGripperRobot
 
 #import rospy
 import rclpy
-from robotiq_2f_gripper_control.msg import _Robotiq2FGripper_robot_input as inputMsg
-
-
+from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotInput as inputMsg
 
 
 def printStatus(status):
@@ -56,7 +54,7 @@ def printStatus(status):
 def Robotiq2FGripperStatusListener():
     """Initialize the node and subscribe to the Robotiq2FGripperRobotInput topic."""
     
-    rclpy.init(args=args)
+    rclpy.init()
 
     #rospy.init_node("Robotiq2FGripperStatusListener")
     node = rclpy.create_node("Robotiq2FGripperStatusListener")
@@ -66,14 +64,14 @@ def Robotiq2FGripperStatusListener():
 #    )
 #    rospy.spin()
 
-	node.create_subscribtion(
+    node.create_subscription(
 		inputMsg,
 		"Robotiq2FGripperRobotInput",
 		printStatus,
         10
-	)
-	while rclpy.ok():
-       	rclpy.spin_once(node)
+    )
+    while rclpy.ok():
+        rclpy.spin_once(node)
 
 
 def statusInterpreter(status):
