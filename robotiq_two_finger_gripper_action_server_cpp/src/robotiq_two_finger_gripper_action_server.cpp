@@ -51,7 +51,6 @@ namespace robotiq_two_finger_gripper_action_server_cpp
     using GoalHandleRobotiqTwoFingerGripper = rclcpp_action::ServerGoalHandle<RobotiqTwoFingerGripper>;
 
     GripperInput current_state_;
-    GripperOutput goal_state_;
     std::string action_name_ ;
 
 
@@ -116,15 +115,14 @@ namespace robotiq_two_finger_gripper_action_server_cpp
 
       if (this->current_state_.g_sta != 0x3)
       {
-          // Check to see if the gripper is active or if it has been asked to be active
-          if (current_state_.g_sta == 0x0 && goal_state_.r_act != 0x1)
+          // Check to see if the gripper is activating
+          if (current_state_.g_sta == 0x0)
           {
               // If it hasn't been asked, active it
               RCLCPP_INFO(this->get_logger(),"Activating gripper for gripper action server: %s", action_name_.c_str());
               GripperOutput out;
               out.r_act = 0x1;
               // other params should be zero
-              goal_state_ = out;
               goal_publisher_->publish(out);
           }
           // Otherwise wait for the gripper to activate
@@ -212,8 +210,7 @@ namespace robotiq_two_finger_gripper_action_server_cpp
         output.r_fr = static_cast<uint8_t>(goal->force);
       }
 
-      goal_state_ = output;
-      goal_publisher_->publish(goal_state_);
+      goal_publisher_->publish(output);
 
       //the server needs to sleep for a bit, otherwise the current_status_.g_obj will not yet be updated and therefore not start thw while loop
 
