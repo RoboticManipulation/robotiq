@@ -46,8 +46,11 @@ from rclpy.node import Node
 import robotiq_2f_gripper_control.baseRobotiq2FGripper
 import robotiq_modbus_rtu.comModbusRtu
 import sys
+import numpy as np
+from datetime import datetime, date
 from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotInput as inputMsg
 from robotiq_2f_gripper_control.msg import Robotiq2FGripperRobotOutput as outputMsg
+from sensor_msgs.msg import JointState
 
 
 def mainLoop(device):
@@ -73,6 +76,10 @@ def mainLoop(device):
 		inputMsg, "Robotiq2FGripperRobotInput", 10
 	)
 
+    state_pub = robotiqNode.create_publisher(
+        JointState, "joint_states", 10
+    )
+
     # The Gripper command is received from the topic named 'Robotiq2FGripperRobotOutput'
 #    rospy.Subscriber(
 #        "Robotiq2FGripperRobotOutput",
@@ -86,6 +93,8 @@ def mainLoop(device):
 		gripper.refreshCommand,
         10
 	)
+    prev_pos = 0.0
+    prev_time = robotiqNode.get_clock().now().to_msg()
 
     # We loop
     while rclpy.ok():
@@ -93,6 +102,9 @@ def mainLoop(device):
         # Get and publish the Gripper status
         status = gripper.getStatus()
         pub.publish(status)
+
+        js = update_gripper_joint_state(robotiqNode, status, prev_pos, prev_time)
+        state_pub.publish(js)
 
         # Wait a little
         # rospy.sleep(0.05)
@@ -107,6 +119,25 @@ def mainLoop(device):
         
     robotiqNode.destroy_node()
     rclpy.shutdown() 
+
+
+def update_gripper_joint_state(robotiqNode, status, prev_pos, prev_time):
+    js = JointState()
+    js.header.frame_id = ''
+    current_time = robotiqNode.get_clock().now()
+    js.header.stamp = current_time.to_msg()
+    js.name = ["robotiq_85_left_knuckle_joint"]
+    max_joint_limit = 0.8
+    po = float(status.g_po)
+    pos = np.clip(0.085/(3.-230.)*(po-230.), 0, 0.085)
+    posi = np.clip(0.8 - ((0.8/0.085) * pos), 0., 0.8)
+    js.position = [posi]
+    #dt = datetime.combine(date.today(), current_time) - datetime.combine(date.today(), prev_time)
+    #prev_time = current_time
+    #js.velocity = [(posi-prev_pos)/dt]
+    #prev_pos = posi
+    return js
+
 
 
 if __name__ == "__main__":

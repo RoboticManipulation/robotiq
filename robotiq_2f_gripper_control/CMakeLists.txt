@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(robotiq_2f_gripper_control)
 set(CMAKE_CXX_STANDARD 14)
-#find_package(catkin REQUIRED COMPONENTS robotiq_ethercat roscpp rospy message_generation)
+#find_package(catkin REQUIRED COMPONENTS robotiq_ethercat roscpp rospy message_generation, sensor_msgs)
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 #find_package(robotiq_ethercat REQUIRED)

@@ -15,6 +15,7 @@
 
   <depend>rclpy</depend>
   <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
   <!--depend>robotiq_ethercat</depend-->
 
   <build_depend>message_generation</build_depend>
